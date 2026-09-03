@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KR Soul - Bunpo Gratis 2.0</title>
+<style>
+:root{--bg:#0a0a0f;--card:#14141f;--card2:#1c1c2e;--pink:#ff2e93;--pink2:#ff7ab8;--border:rgba(255,255,255,.08)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#fff;font-family:system-ui;padding:18px;max-width:720px;margin:0 auto}
+h1{font-size:28px;margin:8px 0 4px}h1 span{color:var(--pink)}
+.mono{font-family:monospace;font-size:11px;opacity:.6}
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:18px;margin:18px 0}
+.card h3{margin:0 0 12px;font-size:18px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.hangul{background:var(--card2);border-radius:14px;padding:12px 6px;text-align:center;border:1px solid transparent;cursor:pointer}
+.hangul:hover{border-color:var(--pink)}
+.hangul b{font-size:22px;display:block}
+.hangul small{font-size:11px;opacity:.6}
+.hangul .play{font-size:12px;margin-top:6px;display:inline-block;background:rgba(255,46,147,.15);border:1px solid rgba(255,46,147,.25);padding:2px 7px;border-radius:999px}
+.phrase{background:var(--card2);border-radius:14px;padding:12px 14px;margin:10px 0;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.phrase b{font-size:15px}.phrase .ko{color:var(--pink2)}
+.btn{background:#fff;color:#000;border:0;border-radius:999px;padding:10px 16px;font-weight:700;font-size:13px;cursor:pointer}
+.btn-ghost{background:transparent;color:#fff;border:1px solid var(--border)}
+.qbtn{display:block;width:100%;text-align:left;background:var(--card2);color:#fff;border:1px solid var(--border);padding:12px;border-radius:12px;margin:8px 0;cursor:pointer}
+.qbtn.correct{border-color:#10b981;background:rgba(16,185,129,.12)}
+.qbtn.wrong{border-color:var(--pink);background:rgba(255,46,147,.12)}
+.badge{display:inline-block;background:var(--card2);border:1px solid var(--border);border-radius:999px;padding:4px 10px;font-size:10px}
+</style>
+</head>
+<body>
+<h1>KR Soul - <span>Bunpo Gratis 2.0</span></h1>
+<p class="mono">Rolim → Seul 2028 · <span id="count">1327 dias</span> · Seul <span id="s">--:--</span> | Rolim <span id="r">--:--</span> · com áudio 🔊</p>
+<div class="card"><h3>1. Hangul - clica pra ouvir 🔊</h3><div class="grid" id="h"></div></div>
+<div class="card"><h3>2. Frases que você usa com ela 💬</h3><div id="phrases"></div></div>
+<div class
