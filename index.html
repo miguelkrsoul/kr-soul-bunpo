@@ -17,9 +17,9 @@ h1{font-size:28px;margin:8px 0 4px}h1 span{color:var(--pink)}
 .hangul:hover{border-color:var(--pink)}
 .hangul b{font-size:22px;display:block}
 .hangul small{font-size:11px;opacity:.6}
-.hangul .play{font-size:12px;margin-top:6px;display:inline-block;background:rgba(255,46,147,.15);border:1px solid rgba(255,46,147,.25);padding:2px 7px;border-radius:999px}
+.hangul.play{font-size:12px;margin-top:6px;display:inline-block;background:rgba(255,46,147,.15);border:1px solid rgba(255,46,147,.25);padding:2px 7px;border-radius:999px}
 .phrase{background:var(--card2);border-radius:14px;padding:12px 14px;margin:10px 0;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.phrase b{font-size:15px}.phrase .ko{color:var(--pink2)}
+.phrase b{font-size:15px}.phrase.ko{color:var(--pink2)}
 .btn{background:#fff;color:#000;border:0;border-radius:999px;padding:10px 16px;font-weight:700;font-size:13px;cursor:pointer}
 .btn-ghost{background:transparent;color:#fff;border:1px solid var(--border)}
 .qbtn{display:block;width:100%;text-align:left;background:var(--card2);color:#fff;border:1px solid var(--border);padding:12px;border-radius:12px;margin:8px 0;cursor:pointer}
@@ -33,4 +33,20 @@ h1{font-size:28px;margin:8px 0 4px}h1 span{color:var(--pink)}
 <p class="mono">Rolim → Seul 2028 · <span id="count">1327 dias</span> · Seul <span id="s">--:--</span> | Rolim <span id="r">--:--</span> · com áudio 🔊</p>
 <div class="card"><h3>1. Hangul - clica pra ouvir 🔊</h3><div class="grid" id="h"></div></div>
 <div class="card"><h3>2. Frases que você usa com ela 💬</h3><div id="phrases"></div></div>
-<div class
+<div class="card"><h3>3. Quiz 8 perguntas</h3><div id="q"></div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn" onclick="restart()">Refazer</button><span class="badge" id="score">0/8</span></div></div>
+<footer class="mono">Feito por Miguel | KR Soul - Rolim de Moura RO<br><a href="https://miguelkrsoul.github.io" style="color:var(--pink2);text-decoration:none">miguelkrsoul.github.io ↗</a></footer>
+<script>
+function tick(){const n=new Date();const s=new Date(n.toLocaleString('en-US',{timeZone:'Asia/Seoul'}));document.getElementById('s').textContent=s.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});document.getElementById('r').textContent=n.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});const t=new Date('2028-02-01');const d=Math.ceil((t-n)/86400000);document.getElementById('count').textContent=d+' dias restantes';}setInterval(tick,1000);tick();
+function speakKO(text){const u=new SpeechSynthesisUtterance(text);u.lang='ko-KR';u.rate=0.9;const v=speechSynthesis.getVoices();const ko=v.find(x=>x.lang.includes('ko'));if(ko)u.voice=ko;speechSynthesis.cancel();speechSynthesis.speak(u);}
+const letters=[{h:'ㅎ',r:'h',ko:'히읗',ex:'ㅎ'},{h:'ㅏ',r:'a',ko:'아',ex:'아'},{h:'ㄴ',r:'n',ko:'니은',ex:'나'},{h:'ㄱ',r:'g/k',ko:'기역',ex:'가'},{h:'ㅕ',r:'yeo',ko:'여',ex:'여'},{h:'ㅇ',r:'ng',ko:'이응',ex:'아'},{h:'ㅅ',r:'s',ko:'시옷',ex:'사'},{h:'ㅔ',r:'e',ko:'에',ex:'에'},{h:'ㅛ',r:'yo',ko:'요',ex:'요'},{h:'ㄹ',r:'r/l',ko:'리을',ex:'라'}];
+document.getElementById('h').innerHTML=letters.map(l=>`<div class="hangul" onclick="speakKO('${l.ex}')"><b>${l.h}</b><small>${l.r}</small><span class="play">🔊 ${l.ko}</span></div>`).join('');
+const phrasesData=[{ko:'한국어 공부하고 있어요!',pt:'Estou estudando coreano!',use:'Pra falar que estuda'},{ko:'영상 잘 보고 있어요 😊',pt:'Estou assistindo bem seus vídeos',use:'Comentário pra ela'},{ko:'목소리가 너무 좋아요',pt:'Sua voz é muito linda',use:'Elogio'},{ko:'한국 가고 싶어요',pt:'Quero ir pra Coreia',use:'Seu sonho 2028'},{ko:'이름이 뭐예요?',pt:'Qual seu nome?',use:'Pergunta básica'},{ko:'롤림데모라에서 왔어요',pt:'Vim de Rolim de Moura',use:'De onde você é'}];
+document.getElementById('phrases').innerHTML=phrasesData.map(p=>`<div class="phrase"><div><b class="ko">${p.ko}</b><br><span style="font-size:13px;opacity:.8">${p.pt}</span><br><span class="mono">${p.use}</span></div><button class="btn btn-ghost" onclick="speakKO('${p.ko}')">🔊</button></div>`).join('');
+const QS=[{q:'안녕하세요 significa?',o:['Olá','Tchau','Obrigado'],a:0,ex:'안녕 = paz'},{q:'10.000원 =?',o:['~R$42','~R$420','~R$4,20'],a:0,ex:'1 KRW ~ R$0,0042'},{q:'Seoul em hangul?',o:['서울','부산','한국'],a:0,ex:'서울'},{q:'ㅎㅏ =?',o:['ha','na','sa'],a:0,ex:'ㅎ=h + ㅏ=a'},{q:'한국 가고 싶어요 =?',o:['Quero ir pra Coreia','Estudo coreano','Sua voz é linda'],a:0,ex:'가고 싶어요 = querer ir'},{q:'Seu plano KR é em?',o:['2028','2026','2030'],a:0,ex:'1327 dias!'},{q:'ㅇ no começo tem som?',o:['Não, é mudo','Sim, ng','Sim, s'],a:0,ex:'ㅇ inicial é silencioso'},{q:'영상 잘 보고 있어요 =?',o:['Vejo bem seus vídeos','Obrigado','Tchau'],a:0,ex:'Você usa pra ela'}];
+let idx=0,sc=0,answered=false;
+function show(){const d=document.getElementById('q');if(idx>=QS.length){d.innerHTML=`<h2 style="font-size:32px">${sc}/${QS.length}</h2><p>${sc==8?'대박! ✈️':sc>=5?'잘했어요!':'괜찮아요'}</p>`;document.getElementById('score').textContent=sc+'/'+QS.length;return;}const q=QS[idx];d.innerHTML=`<p><b>${idx+1}. ${q.q}</b></p>`+q.o.map((o,j)=>`<button class="qbtn" onclick="check(${j})">${o}</button>`).join('')+`<p class="mono" id="exp" style="display:none"></p>`;answered=false;}
+function check(j){if(answered)return;answered=true;const q=QS[idx];document.querySelectorAll('.qbtn').forEach((b,k)=>{if(k==q.a)b.classList.add('correct');else if(k==j)b.classList.add('wrong');b.style.pointerEvents='none';});if(j==q.a)sc++;const e=document.getElementById('exp');e.style.display='block';e.textContent=(j==q.a?'✅ ':'❌ ')+q.ex;document.getElementById('score').textContent=sc+'/'+QS.length;setTimeout(()=>{idx++;show()},1200);}
+function restart(){idx=0;sc=0;show()}show();
+</script>
+</body>
+</html>
